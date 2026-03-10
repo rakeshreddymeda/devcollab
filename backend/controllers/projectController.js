@@ -14,3 +14,12 @@ exports.createProject = async (req, res) => {
         res.status(500).json({message: "Server error"});
     }
 };
+
+exports.getProjects = async (req, res) => {
+    try {
+        const projects = await Project.find({ members: req.user.id });
+        res.json(projects);
+    } catch (error) {
+        res.status(500).json({message: "Server error"});
+    }
+};
