@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import API from "../services/api";
 
 function Dashboard() {
@@ -52,7 +54,11 @@ function Dashboard() {
       <ul>
         {
           projects.map((project) => (
-            <li key={project._id}>{project.title}</li>
+            <li key={project._id}>
+              <Link to={`/project/${project._id}`}>
+                {project.title}
+              </Link>
+            </li>
           ))
         }
       </ul>

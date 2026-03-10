@@ -30,4 +30,15 @@ exports.updateTaskStatus = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Server error" });
     }
-}
+};
+
+exports.getTasks = async (req, res) => {
+    try {
+        const tasks = await Task.find({
+            project: req.params.projectId
+        });
+        res.json(tasks);
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
+};
