@@ -42,3 +42,13 @@ exports.getTasks = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+
+exports.deleteTask = async (req, res) => {
+    try {
+        await Task.findByIdAndDelete(req.params.id);
+        req.app.get("io").emit("taskDeleted", req.params.id);
+        res.json({ message: "Task deleted" });
+    } catch (error) {
+        res.status(500).json({ message: "Server error"});
+    }
+};

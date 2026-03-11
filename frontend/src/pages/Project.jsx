@@ -28,6 +28,10 @@ function Project() {
             setTasks((prev) => [...prev, task]);
         });
 
+        socket.on("taskDeleted", (taskId) => {
+            setTasks((prev) => prev.filter(t => t._id !== taskId));
+        });
+
         return () => {
             socket.off("taskCreated");
         };
@@ -55,6 +59,11 @@ function Project() {
         fetchTasks();
     };
 
+    const deleteTask = async (id) => {
+        await API.delete(`/tasks/${id}`);
+        fetchTasks();
+    }
+
     const todo = tasks.filter((t) => t.status === "todo");
     const progress = tasks.filter((t) => t.status === "in-progress");
     const done = tasks.filter((t) => t.status === "done");
@@ -75,6 +84,7 @@ function Project() {
                             <div key={task._id}>
                                 <p>{task.title}</p>
                                 <button onClick={() => updateStatus(task._id, "in-progress")}>Start</button>
+                                <button onClick={() => deleteTask(task._id)}>Delete</button>
                             </div>
                         ))
                     }
@@ -86,6 +96,7 @@ function Project() {
                             <div key={task._id}>
                                 <p>{task.title}</p>
                                 <button onClick={() => updateStatus(task._id, "done")}>Complete</button>
+                                <button onClick={() => deleteTask(task._id)}>Delete</button>
                             </div>
                         ))
                     }
@@ -96,6 +107,7 @@ function Project() {
                         done.map(task => (
                             <div key={task._id}>
                                 <p>{task.title}</p>
+                                <button onClick={() => deleteTask(task._id)}>Delete</button>
                             </div>
                         ))
                     }
