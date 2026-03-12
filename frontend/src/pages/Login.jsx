@@ -1,9 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";    
+
 import API from "../services/api";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/dashboard";
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            navigate("/dashboard");
+        }
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -11,7 +24,7 @@ function Login() {
         try {
             const res = await API.post("/auth/login", { email, password });
             localStorage.setItem("token", res.data.token);
-            alert("Login successful");
+            navigate(from, { replace: true });
         } catch (err) {
             alert("Login failed");
         }

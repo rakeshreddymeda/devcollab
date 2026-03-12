@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
 
-const socket = io("https://devcollab-2iq3.onrender.com/");
+const socket = io("http://localhost:5000");
 
 export default socket;

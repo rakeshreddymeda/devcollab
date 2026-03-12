@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import API from "../services/api";
 
@@ -7,6 +7,12 @@ function Dashboard() {
   const [projects, setProjects] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  }
 
   const fetchProjects = async () => {
     try {
@@ -62,6 +68,7 @@ function Dashboard() {
           ))
         }
       </ul>
+      <button onClick={logout}>Logout</button>
     </div>
   );
 }
