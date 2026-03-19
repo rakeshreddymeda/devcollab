@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";    
+import { useState, useEffect, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 import API from "../services/api";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { login } = useContext(AuthContext);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -23,8 +25,8 @@ function Login() {
 
         try {
             const res = await API.post("/auth/login", { email, password });
-            localStorage.setItem("token", res.data.token);
-            navigate(from, { replace: true });
+            login(res.data.token);
+            navigate(from, { replace: true } || "/dashboard");
         } catch (err) {
             alert("Login failed");
         }

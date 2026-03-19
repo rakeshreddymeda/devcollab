@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: "https://devcollab-2iq3.onrender.com/api"
+    baseURL: "http://localhost:5000/api"
 });
 
 API.interceptors.request.use((req) => {
@@ -12,5 +12,17 @@ API.interceptors.request.use((req) => {
     }
     return req;
 });
+
+// Automatically logs out user if token expires → production-level behavior.
+API.interceptors.response.use(
+    (res) => res,
+    (error) => {
+        if (error.response?.status === 401) {
+            localStorage.removeItem("token");
+            window.location.href = "/";
+        }
+        return Promise.reject(error);
+    }
+);
 
 export default API;

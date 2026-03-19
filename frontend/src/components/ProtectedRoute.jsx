@@ -1,7 +1,9 @@
 import { Navigate, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 function ProtectedRoute ({ children }) {
-    const token = localStorage.getItem("token");
+    const { token } = useContext(AuthContext);
     const location = useLocation();
 
     if (!token) {

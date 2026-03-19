@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "https://devcollab-gilt.vercel.app",
+        origin: "*",
         methods: ["GET", "POST", "PUT", "DELETE"]
     }
 });

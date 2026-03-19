@@ -5,9 +5,15 @@ Real-time developer collaboration platform built using the MERN stack.
 ## Features
 
 - User authentication (JWT)
-- Project management
-- Kanban task board
-- Real-time updates with Socket.io
+- Protected routes
+- React Context auth
+- Project collaboration
+- Kanban task board (drag & drop)
+- Real-time task updates with Socket.io
+- Task comments
+- Environment config
+- Error handling
+- Production deployment
 
 ## Tech Stack
 
